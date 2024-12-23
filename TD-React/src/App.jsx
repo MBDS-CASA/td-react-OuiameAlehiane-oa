@@ -3,6 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import image from './assets/vignette_par_defaut.jpg'
+import data from './data'
+
 
 function Header(){
     return(
@@ -40,6 +42,42 @@ function Footer(){
     )
 }
 
+function getRandomItem(items) {
+    const randomIndex = Math.floor(Math.random() * items.length);
+    return items[randomIndex];
+}
+
+function Item() {
+    const [item, setItem] = useState(getRandomItem(data));
+
+    const handleRandomize = () => {
+        const randomItem = getRandomItem(data);
+        setItem(randomItem);
+    };
+
+    return (
+        <div >
+            <h4>Les Information Aléatoire</h4>
+            <p >
+                <strong>Course :</strong> {item.course}
+            </p>
+            <p >
+                <strong>Student :</strong> {item.student.firstname} {item.student.lastname}
+            </p>
+            <p >
+                <strong>Date :</strong> {item.date}
+            </p>
+            <p >
+                <strong>Grade :</strong> {item.grade}
+            </p>
+            <button  onClick={handleRandomize}>
+                Un autre élément
+            </button>
+        </div>
+    );
+}
+
+
 function App() {
   const [count, setCount] = useState(50)
 
@@ -48,6 +86,7 @@ function App() {
       <div>
           <Header/>
           <MainContent/>
+          <Item/>
 
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
