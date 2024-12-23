@@ -16,7 +16,15 @@ function Header(){
 
 function MainContent(){
     return (
-        <h3>Ajouter un composant pour le contenu principal de la page</h3>
+        <h3>Ici, nous afficherons des informations interessantes :)</h3>
+    )
+}
+
+function Footer(){
+    return (
+        <footer>
+            <p>Tous droits réservés - Alehiane Ouiame</p>
+        </footer>
     )
 }
 
@@ -28,6 +36,7 @@ function App() {
       <div>
           <Header/>
           <MainContent/>
+
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -47,6 +56,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+        <Footer/>
     </>
   )
 }
