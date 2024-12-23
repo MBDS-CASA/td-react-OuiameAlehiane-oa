@@ -14,6 +14,12 @@ function Header(){
     )
 }
 
+function MainContent(){
+    return (
+        <h3>Ajouter un composant pour le contenu principal de la page</h3>
+    )
+}
+
 function App() {
   const [count, setCount] = useState(50)
 
@@ -21,6 +27,7 @@ function App() {
     <>
       <div>
           <Header/>
+          <MainContent/>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
