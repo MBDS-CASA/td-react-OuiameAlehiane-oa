@@ -13,12 +13,24 @@ function Header(){
         </header>
     )
 }
+function MainContent() {
 
-function MainContent(){
+    const now = new Date();
+    const day = now.getDate();
+    const month = now.toLocaleString('fr-FR', { month: 'long' });
+    const year = now.getFullYear();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const second = now.getSeconds();
+
     return (
-        <h3>Ici, nous afficherons des informations interessantes :)</h3>
-    )
+        <>
+            <p>Ici, nous afficherons des informations intéressantes :)</p>
+            <p>Bonjour, on est le {day}, {month}, {year} et il est {hour}:{minute}:{second}</p>
+        </>
+    );
 }
+
 
 function Footer(){
     return (
