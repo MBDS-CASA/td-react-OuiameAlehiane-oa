@@ -33,10 +33,10 @@ function MainContent() {
 
 
 function Footer(){
+    const now = new Date();
+    const year = now.getFullYear();
     return (
-        <footer>
-            <p>Tous droits réservés - Alehiane Ouiame</p>
-        </footer>
+        <p>© {year} - Alehiane Ouiame, Tous droits réservés.</p>
     )
 }
 
