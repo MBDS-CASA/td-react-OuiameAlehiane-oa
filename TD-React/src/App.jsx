@@ -3,7 +3,67 @@ import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 import image from './assets/vignette_par_defaut.jpg';
-import data from 'C:/Users/PC/Desktop/dossier/td-react-OuiameAlehiane-oa/TD-React/src/data.json';
+import data from './data.json';
+
+// Composant pour les informations aléatoires
+const RandomInfo = () => {
+    const [item, setItem] = useState(getRandomItem(data));
+
+    const handleRandomize = () => {
+        const randomItem = getRandomItem(data);
+        setItem(randomItem);
+    };
+
+    return (
+        <div className="random-info-section">
+            <h4>Les Information Aléatoire</h4>
+            <p>
+                <strong>Course :</strong> {item.course}
+            </p>
+            <p>
+                <strong>Student :</strong> {item.student.firstname} {item.student.lastname}
+            </p>
+            <p>
+                <strong>Date :</strong> {item.date}
+            </p>
+            <p>
+                <strong>Grade :</strong> {item.grade}
+            </p>
+            <button onClick={handleRandomize} className="randomize-button">
+                Un autre élément
+            </button>
+        </div>
+    );
+};
+
+// Composants simples pour chaque section du menu
+const Notes = () => (
+    <div>
+        <h3>Section Notes</h3>
+        <p>Contenu de la section Notes</p>
+    </div>
+);
+
+const Etudiants = () => (
+    <div>
+        <h3>Liste des Étudiants</h3>
+        <p>Section en construction...</p>
+    </div>
+);
+
+const Matieres = () => (
+    <div>
+        <h3>Liste des Matières</h3>
+        <p>Section en construction...</p>
+    </div>
+);
+
+const APropos = () => (
+    <div>
+        <h3>À Propos</h3>
+        <p>Cette application est un exemple d'utilisation de React.</p>
+    </div>
+);
 
 function Header() {
     return (
@@ -25,10 +85,10 @@ function MainContent() {
     const second = now.getSeconds();
 
     return (
-        <>
+        <div className="main-content">
             <p>Ici, nous afficherons des informations intéressantes :)</p>
             <p>Bonjour, on est le {day} {month} {year} et il est {hour}:{minute}:{second}</p>
-        </>
+        </div>
     );
 }
 
@@ -36,7 +96,9 @@ function Footer() {
     const now = new Date();
     const year = now.getFullYear();
     return (
-        <p>© {year} - Alehiane Ouiame, Tous droits réservés.</p>
+        <footer>
+            <p>{year} - Alehiane Ouiame, Tous droits réservés.</p>
+        </footer>
     );
 }
 
@@ -45,88 +107,51 @@ function getRandomItem(items) {
     return items[randomIndex];
 }
 
-function Item() {
-    const [item, setItem] = useState(getRandomItem(data));
+function Menu() {
+    const [activeItem, setActiveItem] = useState('Notes');
 
-    const handleRandomize = () => {
-        const randomItem = getRandomItem(data);
-        setItem(randomItem);
-    };
-
-    return (
-        <div>
-            <h4>Les Information Aléatoire</h4>
-            <p>
-                <strong>Course :</strong> {item.course}
-            </p>
-            <p>
-                <strong>Student :</strong> {item.student.firstname} {item.student.lastname}
-            </p>
-            <p>
-                <strong>Date :</strong> {item.date}
-            </p>
-            <p>
-                <strong>Grade :</strong> {item.grade}
-            </p>
-            <button onClick={handleRandomize}>
-                Un autre élément
-            </button>
-        </div>
-    );
-}
-
-function Button() {
     const menuItems = [
-        'Notes',
-        'Etudiants',
-        'Matières',
-        'A propos'
+        { id: 'Notes', component: <Notes /> },
+        { id: 'Etudiants', component: <Etudiants /> },
+        { id: 'Matières', component: <Matieres /> },
+        { id: 'A propos', component: <APropos /> }
     ];
 
-    const handleClick = (item) => {
-        alert(`Vous avez cliqué sur ${item}`);
-    };
-
     return (
-        <div className="flex flex-row justify-around mt-4">
-            {menuItems.map((item) => (
-                <button
-                    key={item}
-                    onClick={() => handleClick(item)}
-                    className="w-48 px-6 py-3 text-white bg-purple-800 hover:bg-purple-900 rounded-lg
-                    shadow-lg transition-all duration-200 font-semibold text-center transform
-                    hover:scale-105 hover:translate-x-2"
-                >
-                    {item}
-                </button>
-            ))}
+        <div className="menu-container">
+            <div className="menu-buttons">
+                {menuItems.map((item) => (
+                    <button
+                        key={item.id}
+                        onClick={() => setActiveItem(item.id)}
+                        className={`menu-button ${activeItem === item.id ? 'active' : ''}`}
+                    >
+                        {item.id}
+                    </button>
+                ))}
+            </div>
+            <div className="content-section">
+                {menuItems.find(item => item.id === activeItem)?.component}
+            </div>
         </div>
     );
 }
 
 function App() {
-    const [count, setCount] = useState(50);
-
     return (
         <>
             <Header/>
-            <Button/>
+            <Menu/>
+            <RandomInfo/>
             <MainContent/>
-            <Item/>
-            <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
-                </button>
-                <p>
-                    Edit <code>src/App.jsx</code> and save to test HMR
-                </p>
+            <div className="logo-section">
+                <a href="https://vite.dev" target="_blank">
+                    <img src={viteLogo} className="logo" alt="Vite logo" />
+                </a>
+                <a href="https://react.dev" target="_blank">
+                    <img src={reactLogo} className="logo react" alt="React logo" />
+                </a>
             </div>
-            <a href="https://vite.dev" target="_blank">
-                <img src={viteLogo} className="logo" alt="Vite logo" />
-            </a>
-            <a href="https://react.dev" target="_blank">
-                <img src={reactLogo} className="logo react" alt="React logo" />
-            </a>
             <Footer/>
         </>
     );
